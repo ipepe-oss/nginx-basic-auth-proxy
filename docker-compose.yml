@@ -1,9 +1,9 @@
 version: '2'
 services:
   web:
-    image: tutum/hello-world:latest
+    image: ipepe/kitten
   nginx:
-    image: quay.io/dtan4/nginx-basic-auth-proxy:latest
+    build: .
     ports:
       - 8080:80
       - 8090:8090
