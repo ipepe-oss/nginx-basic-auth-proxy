@@ -23,7 +23,7 @@ $ docker run \
     -e PROXY_PASS=https://www.google.com \
     -e SERVER_NAME=proxy.dtan4.net \
     -e PORT=80 \
-    quay.io/dtan4/nginx-basic-auth-proxy
+    ipepe/nginx-basic-auth
 ```
 
 Access to http://localhost:8080 , then browser asks you username and password.

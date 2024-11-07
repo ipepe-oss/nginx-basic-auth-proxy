@@ -1,4 +1,4 @@
-FROM nginx:1.11.9-alpine
+FROM nginx:alpine3.20-slim
 
 # for htpasswd command
 RUN apk add --no-cache --update \
@@ -13,6 +13,8 @@ ENV WORKER_PROCESSES auto
 
 COPY files/run.sh /
 COPY files/nginx.conf.tmpl /
+
+RUN chmod +x /run.sh
 
 # use SIGQUIT for graceful shutdown
 # c.f. http://nginx.org/en/docs/control.html
