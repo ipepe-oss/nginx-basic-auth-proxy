@@ -2,7 +2,8 @@ FROM nginx:alpine3.20-slim
 
 # for htpasswd command
 RUN apk add --no-cache --update \
-      apache2-utils
+      apache2-utils \
+      openssl
 RUN rm -f /etc/nginx/conf.d/*
 
 ENV SERVER_NAME example.com
@@ -15,6 +16,13 @@ COPY files/run.sh /
 COPY files/nginx.conf.tmpl /
 
 RUN chmod +x /run.sh
+
+# Generate self-signed certificate
+RUN mkdir -p /etc/nginx/ssl && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/nginx.key \
+    -out /etc/nginx/ssl/nginx.crt \
+    -subj "/CN=localhost"
 
 # use SIGQUIT for graceful shutdown
 # c.f. http://nginx.org/en/docs/control.html
