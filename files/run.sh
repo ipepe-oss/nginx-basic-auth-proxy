@@ -17,6 +17,16 @@ if [ -z $PROXY_PASS ]; then
   exit 1
 fi
 
+if [ -z $SSL_CERT ]; then
+  echo >&2 "SSL_CERT must be set"
+  exit 1
+fi
+
+if [ -z $SSL_KEY ]; then
+  echo >&2 "SSL_KEY must be set"
+  exit 1
+fi
+
 htpasswd -bBc /etc/nginx/.htpasswd $BASIC_AUTH_USERNAME $BASIC_AUTH_PASSWORD
 sed \
   -e "s/##CLIENT_MAX_BODY_SIZE##/$CLIENT_MAX_BODY_SIZE/g" \

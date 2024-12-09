@@ -18,11 +18,14 @@ $ docker run \
     --name nginx-basic-auth-proxy \
     -p 8080:80 \
     -p 8090:8090 \
+    -p 8443:443 \
     -e BASIC_AUTH_USERNAME=username \
     -e BASIC_AUTH_PASSWORD=password \
     -e PROXY_PASS=https://www.google.com \
     -e SERVER_NAME=proxy.dtan4.net \
     -e PORT=80 \
+    -e SSL_CERT=/etc/nginx/ssl/nginx.crt \
+    -e SSL_KEY=/etc/nginx/ssl/nginx.key \
     ipepe/nginx-basic-auth
 ```
 
@@ -69,6 +72,14 @@ Reading: 0 Writing: 1 Waiting: 0
 |`CLIENT_MAX_BODY_SIZE`|Value for `client_max_body_size` directive|`1m`|
 |`PROXY_READ_TIMEOUT`|Value for `proxy_read_timeout` directive|`60s`|
 |`WORKER_PROCESSES`|Value for `worker_processes` directive|`auto`|
+|`SSL_CERT`|Path to the SSL certificate|`/etc/nginx/ssl/nginx.crt`|
+|`SSL_KEY`|Path to the SSL certificate key|`/etc/nginx/ssl/nginx.key`|
+
+## Self-Signed Certificate
+
+This Docker image generates a self-signed certificate during the build process. The certificate and key are stored in `/etc/nginx/ssl/nginx.crt` and `/etc/nginx/ssl/nginx.key` respectively.
+
+To use the self-signed certificate, you can access the proxy via `https://localhost:8443`. Note that your browser will likely show a warning because the certificate is self-signed.
 
 ## Author
 
